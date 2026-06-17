@@ -320,7 +320,7 @@ async function handleApiRequest(req, res, pathname, searchParams) {
   res.end(JSON.stringify({ error: 'Endpoint not found' }));
 }
 
-const server = http.createServer((req, res) => {
+const requestListener = (req, res) => {
   // Decode URL to handle spaces/special characters
   const decodedUrl = decodeURIComponent(req.url);
   
@@ -372,9 +372,16 @@ const server = http.createServer((req, res) => {
       res.end(content, 'utf-8');
     }
   });
-});
+};
 
-server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
-  console.log('Press Ctrl+C to stop.');
-});
+const server = http.createServer(requestListener);
+
+// Export for serverless environments (Vercel) or start listener (Local/Render)
+if (require.main === module) {
+  server.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}/`);
+    console.log('Press Ctrl+C to stop.');
+  });
+} else {
+  module.exports = requestListener;
+}

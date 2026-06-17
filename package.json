@@ -4,6 +4,7 @@
   "description": "Bhim Kitchen Master Chef Dining Experience Showcase",
   "main": "server.js",
   "scripts": {
+    "build": "echo 'Static site — no build step required'",
     "dev": "node server.js",
     "start": "node server.js"
   },

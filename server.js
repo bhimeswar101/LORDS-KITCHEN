@@ -337,6 +337,13 @@ const requestListener = (req, res) => {
     return;
   }
 
+  // Handle Netlify Functions routing mapping
+  if (pathname.startsWith('/.netlify/functions/api/')) {
+    pathname = pathname.replace('/.netlify/functions/api/', '/api/');
+  } else if (pathname === '/.netlify/functions/api') {
+    pathname = '/api/';
+  }
+
   // Route API requests
   if (pathname.startsWith('/api/')) {
     handleApiRequest(req, res, pathname, searchParams);

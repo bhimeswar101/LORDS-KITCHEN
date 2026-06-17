@@ -125,6 +125,11 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateY(-2px);
 }
 
+.btn-header-back {
+  padding: 8px 24px;
+  font-size: 14px;
+}
+
 /* Header & Navbar */
 .navbar {
   position: fixed;
@@ -1217,12 +1222,14 @@ input:focus, select:focus, textarea:focus {
   justify-content: center;
   opacity: 0;
   pointer-events: none;
+  visibility: hidden;
   transition: var(--transition-smooth);
 }
 
 .modal-overlay.active {
   opacity: 1;
   pointer-events: all;
+  visibility: visible;
 }
 
 .modal-container {
@@ -1470,6 +1477,11 @@ input:focus, select:focus, textarea:focus {
   color: var(--color-text-white);
 }
 
+/* Mobile Navigation Toggle (Default hidden) */
+.mobile-nav-toggle {
+  display: none;
+}
+
 /* Responsive Breakpoints */
 @media (max-width: 992px) {
   .hero-grid {
@@ -1517,11 +1529,67 @@ input:focus, select:focus, textarea:focus {
 }
 
 @media (max-width: 768px) {
-  .nav-menu {
-    display: none; /* simple mobile drawer could be added or hidden */
+  .mobile-nav-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 26px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 110;
+    padding: 0;
   }
+  
+  .mobile-nav-toggle .hamburger-bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-primary);
+    transition: var(--transition-smooth);
+    border-radius: var(--radius-full);
+  }
+  
+  .mobile-nav-toggle.open .hamburger-bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  
+  .mobile-nav-toggle.open .hamburger-bar:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .mobile-nav-toggle.open .hamburger-bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background-color: rgba(9, 14, 10, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(159, 232, 112, 0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    transition: var(--transition-smooth);
+    z-index: 105;
+  }
+
+  .nav-menu.open {
+    right: 0;
+  }
+
   .specials-grid {
     grid-template-columns: 1fr;
+  }
+  .reservation-card {
+    padding: var(--spacing-md);
   }
   .reservation-form {
     grid-template-columns: 1fr;
@@ -1537,5 +1605,48 @@ input:focus, select:focus, textarea:focus {
   }
   .tables-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .carousel-container {
+    height: 320px;
+  }
+  .testimonial-text {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+  .navbar-container {
+    height: 70px;
+  }
+  .logo {
+    font-size: 20px;
+  }
+  .logo-icon {
+    width: 30px;
+    height: 30px;
+  }
+  .nav-cta .btn, .btn-header-back {
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+  }
+  .reservation-card {
+    padding: var(--spacing-sm);
+  }
+  .floor-plan {
+    padding: var(--spacing-sm);
+  }
+  .carousel-container {
+    height: 380px;
+  }
+  .modal-container {
+    width: calc(100% - 32px);
+    margin: 16px;
+  }
+  .modal-content {
+    padding: 16px;
   }
 }

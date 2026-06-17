@@ -229,7 +229,29 @@ window.addEventListener("DOMContentLoaded", () => {
   initTestimonials();
   setupModalEvents();
   setupNavigationHighlighting();
+  setupMobileNav();
 });
+
+/* --- MOBILE NAVIGATION PANEL --- */
+function setupMobileNav() {
+  const toggleBtn = document.getElementById("mobile-nav-toggle");
+  const navMenu = document.querySelector(".nav-menu");
+  const navLinks = document.querySelectorAll(".nav-link");
+
+  if (toggleBtn && navMenu) {
+    toggleBtn.addEventListener("click", () => {
+      toggleBtn.classList.toggle("open");
+      navMenu.classList.toggle("open");
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener("click", () => {
+        toggleBtn.classList.remove("open");
+        navMenu.classList.remove("open");
+      });
+    });
+  }
+}
 
 /* --- TOAST SYSTEM --- */
 function showToast(message) {

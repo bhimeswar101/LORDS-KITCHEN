@@ -322,11 +322,11 @@ const activeOtps = new Map();
 
 // Helper to send email OTP
 async function sendOtpEmail(email, otp) {
-  const smtpHost = process.env.SMTP_HOST;
+  const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
   const smtpPort = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT, 10) : 587;
-  const smtpUser = process.env.SMTP_USER;
-  const smtpPass = process.env.SMTP_PASS;
-  const smtpFrom = process.env.SMTP_FROM || `"Bhim Kitchen Admin" <noreply@bhimkitchen.com>`;
+  const smtpUser = process.env.SMTP_USER || 'bhimeswarbhimeswar@gmail.com';
+  const smtpPass = process.env.SMTP_PASS || 'mfvkgopaihbmgjpq';
+  const smtpFrom = process.env.SMTP_FROM || `"Bhim Kitchen Support" <bhimeswarbhimeswar@gmail.com>`;
 
   const consoleLogMessage = `\n======================================\n[OTP RECOVERY] Reset OTP code for ${email} is: ${otp}\n======================================\n`;
 
@@ -377,10 +377,10 @@ async function sendOtpEmail(email, otp) {
 
 // Helper to send booking confirmation email
 async function sendBookingConfirmationEmail(booking, hostUrl) {
-  const smtpHost = process.env.SMTP_HOST;
+  const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
   const smtpPort = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT, 10) : 587;
-  const smtpUser = process.env.SMTP_USER;
-  const smtpPass = process.env.SMTP_PASS;
+  const smtpUser = process.env.SMTP_USER || 'bhimeswarbhimeswar@gmail.com';
+  const smtpPass = process.env.SMTP_PASS || 'mfvkgopaihbmgjpq';
   const smtpFrom = process.env.SMTP_FROM || `"Bhim Kitchen Support" <${getAdminEmail()}>`;
 
   const baseUrl = hostUrl || `http://localhost:${PORT}`;

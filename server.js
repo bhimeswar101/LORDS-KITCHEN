@@ -376,14 +376,15 @@ async function sendOtpEmail(email, otp) {
 }
 
 // Helper to send booking confirmation email
-async function sendBookingConfirmationEmail(booking) {
+async function sendBookingConfirmationEmail(booking, hostUrl) {
   const smtpHost = process.env.SMTP_HOST;
   const smtpPort = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT, 10) : 587;
   const smtpUser = process.env.SMTP_USER;
   const smtpPass = process.env.SMTP_PASS;
   const smtpFrom = process.env.SMTP_FROM || `"Bhim Kitchen Support" <${getAdminEmail()}>`;
 
-  const cancelLink = `http://localhost:${PORT}/cancel.html?code=${booking.code}`;
+  const baseUrl = hostUrl || `http://localhost:${PORT}`;
+  const cancelLink = `${baseUrl}/cancel.html?code=${booking.code}`;
 
   const consoleLogMessage = `
 ============================================================
@@ -749,8 +750,13 @@ async function handleApiRequest(req, res, pathname, searchParams) {
         const success = await insertBooking(newBooking);
 
         if (success) {
-          // Send confirmation email to the guest asynchronously
-          sendBookingConfirmationEmail(newBooking).catch(err => {
+          // Resolve current protocol and host dynamically for absolute email links
+          const protocol = req.headers['x-forwarded-proto'] || 'http';
+          const host = req.headers.host || `localhost:${PORT}`;
+          const hostUrl = `${protocol}://${host}`;
+
+          // Send confirmation email to the guest asynchronously with the dynamic hostUrl
+          sendBookingConfirmationEmail(newBooking, hostUrl).catch(err => {
             console.error('Error sending confirmation email asynchronously:', err);
           });
 

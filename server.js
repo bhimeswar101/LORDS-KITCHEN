@@ -54,7 +54,25 @@ const DEFAULT_TABLES = [
   { id: 12, number: "VIP-4", seats: "4 seats", section: "Chef's Counter VIP" }
 ];
 
-const BOOKINGS_FILE = path.join(__dirname, 'bookings.json');
+// Determine bookings file path (use writeable /tmp directory in serverless environments)
+const isServerless = !!(process.env.NETLIFY || process.env.VERCEL || process.env.LAMBDA_TASK_ROOT || process.env.AWS_LAMBDA_FUNCTION_NAME);
+const BOOKINGS_FILE = isServerless 
+  ? path.join('/tmp', 'bookings.json') 
+  : path.join(__dirname, 'bookings.json');
+
+// Ensure bookings.json exists in the writeable directory
+if (isServerless && !fs.existsSync(BOOKINGS_FILE)) {
+  try {
+    const templatePath = path.join(__dirname, 'bookings.json');
+    if (fs.existsSync(templatePath)) {
+      fs.copyFileSync(templatePath, BOOKINGS_FILE);
+    } else {
+      fs.writeFileSync(BOOKINGS_FILE, JSON.stringify([]));
+    }
+  } catch (err) {
+    console.error('Failed to initialize bookings.json in /tmp:', err);
+  }
+}
 
 // Supabase configuration
 const SUPABASE_URL = process.env.SUPABASE_URL;

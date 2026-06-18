@@ -2,3 +2,5 @@ node_modules/
 .vscode/
 validate_backend.js
 bookings.json
+.env
+settings.json

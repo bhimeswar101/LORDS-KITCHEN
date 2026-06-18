@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cancel Reservation | Bhim Kitchen</title>
+  <meta name="description" content="Manage and cancel your table reservation at Bhim Kitchen.">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .cancel-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cancel-wrapper::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(159, 232, 112, 0.08) 0%, rgba(9, 14, 10, 0) 70%);
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .cancel-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      z-index: 2;
+    }
+
+    .cancel-card {
+      background-color: var(--bg-card);
+      border: 1px solid rgba(159, 232, 112, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+
+    .cancel-card:hover {
+      border-color: rgba(159, 232, 112, 0.15);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), var(--shadow-neon);
+    }
+
+    .cancel-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .cancel-header h2 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .cancel-header p {
+      font-size: 15px;
+      color: var(--color-text-gray);
+    }
+
+    .details-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      background: rgba(9, 14, 10, 0.4);
+      border: 1px solid rgba(159, 232, 112, 0.05);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .details-table tr {
+      border-bottom: 1px solid rgba(159, 232, 112, 0.05);
+    }
+
+    .details-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .details-table td {
+      padding: 14px 16px;
+      font-size: 14.5px;
+    }
+
+    .details-table td.label {
+      font-weight: 600;
+      color: var(--color-primary);
+      width: 40%;
+    }
+
+    .details-table td.value {
+      color: var(--color-text-white);
+      text-align: right;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .btn-cancel-confirm {
+      background-color: #E53E3E;
+      color: #FFFFFF;
+      border: 1px solid #E53E3E;
+      width: 100%;
+    }
+
+    .btn-cancel-confirm:hover {
+      background-color: #C53030;
+      border-color: #C53030;
+      box-shadow: 0 0 15px rgba(229, 62, 62, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-keep {
+      background-color: transparent;
+      color: var(--color-primary);
+      border: 1px solid rgba(159, 232, 112, 0.3);
+      width: 100%;
+    }
+
+    .btn-keep:hover {
+      background-color: rgba(159, 232, 112, 0.1);
+      border-color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+
+    /* Status badge inside card */
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-badge.confirmed {
+      background-color: var(--color-forest);
+      color: var(--color-primary);
+      border: 1px solid var(--color-primary);
+    }
+
+    .status-badge.cancelled {
+      background-color: rgba(255, 80, 80, 0.1);
+      color: #FF8080;
+      border: 1px solid #FF8080;
+    }
+
+    /* States */
+    .state-panel {
+      display: none;
+    }
+
+    .state-panel.active {
+      display: block;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      background-color: rgba(159, 232, 112, 0.1);
+      border: 2px solid var(--color-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin: 0 auto 20px auto;
+      color: var(--color-primary);
+      box-shadow: var(--shadow-neon);
+      animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes scaleUp {
+      from { transform: scale(0.6); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .error-icon {
+      width: 72px;
+      height: 72px;
+      background-color: rgba(255, 80, 80, 0.1);
+      border: 2px solid #FF8080;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin: 0 auto 20px auto;
+      color: #FF8080;
+      box-shadow: 0 0 15px rgba(255, 80, 80, 0.3);
+    }
+
+    .loading-spinner {
+      border: 3px solid rgba(159, 232, 112, 0.1);
+      border-top: 3px solid var(--color-primary);
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      margin: 20px auto;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cancel-wrapper">
+    <!-- Navbar Header -->
+    <header class="navbar">
+      <div class="container navbar-container">
+        <a href="/" class="logo">
+          <div class="logo-icon">B</div>
+          BHIM<span>KITCHEN</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="cancel-content">
+      <div class="cancel-card">
+        
+        <!-- LOADING PANEL -->
+        <div id="panel-loading" class="state-panel active" style="text-align: center; padding: 20px 0;">
+          <div class="loading-spinner"></div>
+          <h3 style="margin-top: 15px; font-family: var(--font-body); font-weight: 500;">Retrieving booking details...</h3>
+          <p style="color: var(--color-text-gray); font-size: 14px;">Verifying reservation code</p>
+        </div>
+
+        <!-- ERROR PANEL -->
+        <div id="panel-error" class="state-panel" style="text-align: center;">
+          <div class="error-icon">✕</div>
+          <h2 class="text-gradient">Reservation Not Found</h2>
+          <p style="margin: 15px 0 25px 0; font-size: 15px; color: var(--color-text-gray);" id="error-message">
+            We couldn't locate a reservation matching that code. It may have been entered incorrectly or cancelled already.
+          </p>
+          <a href="/index.html" class="btn btn-primary">Return to Website</a>
+        </div>
+
+        <!-- CONFIRMATION PANEL -->
+        <div id="panel-confirm" class="state-panel">
+          <div class="cancel-header">
+            <span class="section-tag" style="margin-bottom: 12px; display: inline-block;">Guest Portal</span>
+            <h2 class="text-gradient">Cancel Reservation?</h2>
+            <p>Please review your booking details before confirming cancellation.</p>
+          </div>
+
+          <table class="details-table">
+            <tr>
+              <td class="label">Booking Code</td>
+              <td class="value" id="confirm-code" style="font-family: monospace; font-weight: bold;">-</td>
+            </tr>
+            <tr>
+              <td class="label">Guest Name</td>
+              <td class="value" id="confirm-name">-</td>
+            </tr>
+            <tr>
+              <td class="label">Date</td>
+              <td class="value" id="confirm-date">-</td>
+            </tr>
+            <tr>
+              <td class="label">Time Slot</td>
+              <td class="value" id="confirm-time">-</td>
+            </tr>
+            <tr>
+              <td class="label">Party Size</td>
+              <td class="value" id="confirm-guests">-</td>
+            </tr>
+            <tr>
+              <td class="label">Table & Location</td>
+              <td class="value" id="confirm-table">-</td>
+            </tr>
+            <tr>
+              <td class="label">Status</td>
+              <td class="value"><span id="confirm-status-badge" class="status-badge confirmed">Confirmed</span></td>
+            </tr>
+          </table>
+
+          <div class="action-buttons">
+            <button id="btn-cancel-booking" class="btn btn-cancel-confirm">Yes, Cancel Reservation</button>
+            <a href="/index.html" class="btn btn-keep">Keep Reservation</a>
+          </div>
+        </div>
+
+        <!-- ALREADY CANCELLED PANEL -->
+        <div id="panel-already-cancelled" class="state-panel" style="text-align: center;">
+          <div class="error-icon" style="background-color: rgba(255, 100, 100, 0.05); border-color: rgba(255, 100, 100, 0.4); color: #FF8080;">✕</div>
+          <h2 class="text-gradient">Already Cancelled</h2>
+          <p style="margin: 15px 0 25px 0; font-size: 15px; color: var(--color-text-gray);">
+            This table reservation (code <strong id="already-cancelled-code" style="color: var(--color-text-white);"></strong>) has already been cancelled.
+          </p>
+          <a href="/index.html" class="btn btn-primary">Return to Website</a>
+        </div>
+
+        <!-- SUCCESS PANEL -->
+        <div id="panel-success" class="state-panel" style="text-align: center;">
+          <div class="success-icon">✓</div>
+          <h2 class="text-gradient">Reservation Cancelled</h2>
+          <p style="margin: 15px 0 25px 0; font-size: 15px; color: var(--color-text-gray);">
+            Your reservation at Bhim Kitchen has been cancelled successfully. The table has been released and is available for others to book.
+          </p>
+          <a href="/index.html" class="btn btn-primary">Return to Website</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 24px; color: var(--color-text-gray); font-size: 13.5px; border-top: 1px solid rgba(159, 232, 112, 0.03); z-index: 2;">
+      &copy; 2026 Bhim Kitchen. All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    // State variables
+    let bookingCode = '';
+    
+    // DOM panels
+    const panelLoading = document.getElementById('panel-loading');
+    const panelError = document.getElementById('panel-error');
+    const panelConfirm = document.getElementById('panel-confirm');
+    const panelAlreadyCancelled = document.getElementById('panel-already-cancelled');
+    const panelSuccess = document.getElementById('panel-success');
+    
+    // Error element
+    const errorMessage = document.getElementById('error-message');
+    
+    // Details elements
+    const confirmCode = document.getElementById('confirm-code');
+    const confirmName = document.getElementById('confirm-name');
+    const confirmDate = document.getElementById('confirm-date');
+    const confirmTime = document.getElementById('confirm-time');
+    const confirmGuests = document.getElementById('confirm-guests');
+    const confirmTable = document.getElementById('confirm-table');
+    const confirmStatusBadge = document.getElementById('confirm-status-badge');
+    const alreadyCancelledCode = document.getElementById('already-cancelled-code');
+    
+    // Button
+    const btnCancelBooking = document.getElementById('btn-cancel-booking');
+
+    // Show a specific panel, hide others
+    function showPanel(panel) {
+      document.querySelectorAll('.state-panel').forEach(p => p.classList.remove('active'));
+      panel.classList.add('active');
+    }
+
+    // Load booking details on startup
+    async function loadBookingDetails() {
+      const urlParams = new URLSearchParams(window.location.search);
+      bookingCode = urlParams.get('code');
+
+      if (!bookingCode) {
+        errorMessage.textContent = 'No reservation code was provided in the URL link. Please verify your cancellation link.';
+        showPanel(panelError);
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/bookings/public-details?code=${encodeURIComponent(bookingCode)}`);
+        
+        if (!response.ok) {
+          if (response.status === 404) {
+            errorMessage.textContent = `No reservation was found matching code "${bookingCode}". Please double check your booking code.`;
+          } else {
+            errorMessage.textContent = 'A server error occurred while retrieving your booking details. Please try again later.';
+          }
+          showPanel(panelError);
+          return;
+        }
+
+        const booking = await response.json();
+        
+        if (booking.status === 'cancelled') {
+          alreadyCancelledCode.textContent = bookingCode;
+          showPanel(panelAlreadyCancelled);
+          return;
+        }
+
+        // Fill confirmation panel
+        confirmCode.textContent = bookingCode;
+        confirmName.textContent = booking.name;
+        
+        // Format date beautifully
+        const dateObj = new Date(booking.date);
+        const formattedDate = dateObj.toLocaleDateString('en-US', {
+          weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'
+        });
+        confirmDate.textContent = formattedDate;
+        
+        confirmTime.textContent = booking.time;
+        confirmGuests.textContent = `${booking.guests} Guests`;
+        
+        // Table label map
+        const tableNumberMap = {
+          1: "T-01", 2: "T-02", 3: "T-03", 4: "T-04", 5: "T-05", 6: "T-06",
+          7: "T-07", 8: "T-08", 9: "VIP-1", 10: "VIP-2", 11: "VIP-3", 12: "VIP-4"
+        };
+        const tableLabel = tableNumberMap[booking.tableId] || `Table #${booking.tableId}`;
+        confirmTable.textContent = `${tableLabel} (${booking.section})`;
+        
+        confirmStatusBadge.textContent = booking.status;
+        confirmStatusBadge.className = `status-badge ${booking.status}`;
+        
+        showPanel(panelConfirm);
+      } catch (err) {
+        console.error('Error loading booking:', err);
+        errorMessage.textContent = 'Failed to connect to the restaurant server. Please check your network connection.';
+        showPanel(panelError);
+      }
+    }
+
+    // Submit cancellation request
+    async function handleCancellation() {
+      btnCancelBooking.disabled = true;
+      btnCancelBooking.textContent = 'Processing Cancellation...';
+
+      try {
+        const response = await fetch('/api/bookings/cancel-public', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code: bookingCode })
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          showPanel(panelSuccess);
+        } else {
+          alert(result.error || 'Failed to cancel reservation. Please try again.');
+          btnCancelBooking.disabled = false;
+          btnCancelBooking.textContent = 'Yes, Cancel Reservation';
+        }
+      } catch (err) {
+        console.error('Cancellation submission error:', err);
+        alert('Server connection error. Please try again.');
+        btnCancelBooking.disabled = false;
+        btnCancelBooking.textContent = 'Yes, Cancel Reservation';
+      }
+    }
+
+    // Bind event
+    btnCancelBooking.addEventListener('click', handleCancellation);
+
+    // Initial load
+    window.addEventListener('DOMContentLoaded', loadBookingDetails);
+  </script>
+</body>
+</html>

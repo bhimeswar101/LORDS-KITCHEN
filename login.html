@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bhim Kitchen | Admin Portal Login</title>
+  <meta name="description" content="Secure administrative entrance for Chef Bhim's kitchen operations dashboard.">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Login Page Custom Styling */
+    .login-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 24px;
+    }
+
+    /* Radial glow background */
+    .login-wrapper::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(159, 232, 112, 0.12) 0%, rgba(9, 14, 10, 0) 70%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .login-card {
+      background-color: var(--bg-card);
+      border: 1px solid rgba(159, 232, 112, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 440px;
+      z-index: 2;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      position: relative;
+      transition: var(--transition-smooth);
+    }
+
+    .login-card:hover {
+      border-color: rgba(159, 232, 112, 0.2);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), var(--shadow-neon);
+    }
+
+    .login-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .login-logo .logo-icon {
+      width: 48px;
+      height: 48px;
+      font-size: 24px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-neon);
+    }
+
+    .login-logo h2 {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    .login-logo p {
+      font-size: 14px;
+      color: var(--color-text-gray);
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .form-input-wrapper {
+      position: relative;
+    }
+
+    .form-input-wrapper input {
+      width: 100%;
+      padding: 16px 48px 16px 16px;
+      font-size: 15px;
+      background-color: var(--bg-obsidian);
+      border-color: rgba(159, 232, 112, 0.15);
+    }
+
+    .form-input-wrapper .input-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      opacity: 0.5;
+      pointer-events: none;
+      transition: var(--transition-smooth);
+    }
+
+    .form-input-wrapper input:focus + .input-icon {
+      opacity: 1;
+      color: var(--color-primary);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background-color: var(--color-primary);
+      color: var(--color-forest);
+      border-radius: var(--radius-sm);
+      margin-top: 8px;
+    }
+
+    .btn-login:hover {
+      background-color: var(--color-primary-hover);
+      box-shadow: var(--shadow-neon);
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    .back-link a {
+      color: var(--color-text-gray);
+      text-decoration: none;
+      font-size: 14px;
+      transition: var(--transition-smooth);
+    }
+
+    .back-link a:hover {
+      color: var(--color-primary);
+    }
+
+    .error-box {
+      background-color: rgba(255, 80, 80, 0.1);
+      border: 1px solid rgba(255, 80, 80, 0.2);
+      color: #FF8080;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 13.5px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      animation: shake 0.3s ease-in-out;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* Forgot Password Recovery Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(9, 14, 10, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: var(--transition-smooth);
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background-color: var(--bg-card);
+      border: 1px solid rgba(159, 232, 112, 0.15);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      width: 100%;
+      max-width: 440px;
+      transform: scale(0.9);
+      transition: var(--transition-smooth);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), var(--shadow-neon);
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(159, 232, 112, 0.1);
+      padding-bottom: 16px;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-family: var(--font-display);
+      color: var(--color-primary);
+    }
+
+    .modal-close-btn {
+      background: none;
+      border: none;
+      color: var(--color-text-gray);
+      font-size: 28px;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      line-height: 1;
+    }
+
+    .modal-close-btn:hover {
+      color: var(--color-primary);
+    }
+
+    .modal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .btn-modal-submit {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast">
+    <div class="toast-icon">✓</div>
+    <div id="toast-message" class="toast-msg">Action completed successfully!</div>
+  </div>
+
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="logo-icon">B</div>
+        <h2 class="text-gradient">BHIM<span>KITCHEN</span></h2>
+        <p>Operational Dashboard Security Portal</p>
+      </div>
+
+      <div id="error-box" class="error-box">
+        <span>⚠️</span>
+        <span id="error-message">Incorrect password. Please try again.</span>
+      </div>
+
+      <form id="login-form" class="login-form">
+        <div class="form-group">
+          <label for="password">Enter Administrator Access Key</label>
+          <div class="form-input-wrapper">
+            <input type="password" id="password" required placeholder="🔒 Admin password" autofocus autocomplete="current-password">
+            <span class="input-icon">🔑</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-login">
+          <span>Authenticate Entrance</span>
+          <span style="font-size: 18px;">→</span>
+        </button>
+
+        <div style="text-align: right; margin-top: -12px;">
+          <a href="#" id="forgot-key-trigger" style="color: var(--color-text-gray); font-size: 12.5px; text-decoration: none; transition: var(--transition-smooth);">Forgot Access Key?</a>
+        </div>
+      </form>
+
+      <div class="back-link">
+        <a href="/">← Return to Main Website</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECOVERY MODAL -->
+  <div id="recovery-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Reset Access Key</h3>
+        <button id="modal-close" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- STEP 1: Request OTP -->
+        <form id="otp-request-form" class="modal-form">
+          <p style="font-size: 13.5px; color: var(--color-text-gray); margin-bottom: 10px; line-height: 1.5;">
+            Enter the registered administrator email address. We will send a 6-digit One-Time Password (OTP) to reset your key.
+          </p>
+          <div class="form-group">
+            <label for="recovery-email">Admin Email Address</label>
+            <input type="email" id="recovery-email" required placeholder="bhimeswarbhimeswar@gmail.com">
+          </div>
+          <button type="submit" class="btn btn-primary btn-modal-submit" id="btn-request-otp">Send OTP Code</button>
+        </form>
+
+        <!-- STEP 2: Verify OTP & Reset (hidden by default) -->
+        <form id="otp-reset-form" class="modal-form" style="display: none;">
+          <p style="font-size: 13.5px; color: var(--color-text-gray); margin-bottom: 10px; line-height: 1.5;">
+            An OTP has been sent. Enter the code and choose your new access key.
+          </p>
+          <div class="form-group">
+            <label for="recovery-otp">One-Time Password (OTP)</label>
+            <input type="text" id="recovery-otp" required placeholder="Enter 6-digit code" maxlength="6" pattern="[0-9]{6}">
+          </div>
+          <div class="form-group">
+            <label for="recovery-new-password">New Access Key</label>
+            <input type="password" id="recovery-new-password" required placeholder="Enter new password (min. 4 chars)">
+          </div>
+          <div class="form-group">
+            <label for="recovery-confirm-password">Confirm New Access Key</label>
+            <input type="password" id="recovery-confirm-password" required placeholder="Confirm new password">
+          </div>
+          <button type="submit" class="btn btn-primary btn-modal-submit">Reset Access Key & Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById('login-form');
+    const passwordInput = document.getElementById('password');
+    const errorBox = document.getElementById('error-box');
+    const errorMessage = document.getElementById('error-message');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toast-message');
+
+    function showToast(message, isError = false) {
+      toastMessage.textContent = message;
+      if (isError) {
+        toast.style.borderLeft = "4px solid #FF5050";
+      } else {
+        toast.style.borderLeft = "4px solid var(--color-primary)";
+      }
+      toast.classList.add("active");
+      setTimeout(() => {
+        toast.classList.remove("active");
+      }, 4500);
+    }
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBox.style.display = 'none';
+      
+      const password = passwordInput.value;
+      if (!password) return;
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          showToast('Access granted! Redirecting...');
+          setTimeout(() => {
+            window.location.href = '/admin.html';
+          }, 800);
+        } else {
+          errorMessage.textContent = data.error || 'Authentication failed.';
+          errorBox.style.display = 'flex';
+          // Trigger shake animation again if already showing
+          errorBox.style.animation = 'none';
+          errorBox.offsetHeight; /* trigger reflow */
+          errorBox.style.animation = null;
+        }
+      } catch (err) {
+        console.error('Login error:', err);
+        errorMessage.textContent = 'Server connection issue. Please try again.';
+        errorBox.style.display = 'flex';
+      }
+    });
+
+    // Forgot Password Recovery Handlers (Option B - Email OTP)
+    const forgotKeyTrigger = document.getElementById('forgot-key-trigger');
+    const recoveryModal = document.getElementById('recovery-modal');
+    const modalClose = document.getElementById('modal-close');
+    const otpRequestForm = document.getElementById('otp-request-form');
+    const otpResetForm = document.getElementById('otp-reset-form');
+    const recoveryEmailInput = document.getElementById('recovery-email');
+
+    if (forgotKeyTrigger && recoveryModal) {
+      forgotKeyTrigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        otpRequestForm.reset();
+        otpResetForm.reset();
+        otpRequestForm.style.display = 'flex';
+        otpResetForm.style.display = 'none';
+        recoveryModal.classList.add('active');
+      });
+    }
+
+    if (modalClose && recoveryModal) {
+      modalClose.addEventListener('click', () => {
+        recoveryModal.classList.remove('active');
+      });
+    }
+
+    if (recoveryModal) {
+      recoveryModal.addEventListener('click', (e) => {
+        if (e.target === recoveryModal) {
+          recoveryModal.classList.remove('active');
+        }
+      });
+    }
+
+    // Step 1: Send OTP
+    if (otpRequestForm) {
+      otpRequestForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = recoveryEmailInput.value;
+        if (!email) return;
+
+        const btnRequest = document.getElementById('btn-request-otp');
+        btnRequest.textContent = "Sending OTP...";
+        btnRequest.disabled = true;
+
+        try {
+          const res = await fetch('/api/admin/forgot-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+
+          const data = await res.json();
+
+          if (res.ok && data.success) {
+            let successMsg = "OTP code generated!";
+            if (data.fallback) {
+              successMsg += " (SMTP not set: check server console)";
+            } else {
+              successMsg += " Check your admin email.";
+            }
+            showToast(successMsg);
+            
+            // Switch to Step 2 form
+            otpRequestForm.style.display = 'none';
+            otpResetForm.style.display = 'flex';
+            document.getElementById('recovery-otp').focus();
+          } else {
+            showToast(data.error || "Failed to generate OTP code.", true);
+          }
+        } catch (err) {
+          console.error("Error sending OTP:", err);
+          showToast("Server connection error.", true);
+        } finally {
+          btnRequest.textContent = "Send OTP Code";
+          btnRequest.disabled = false;
+        }
+      });
+    }
+
+    // Step 2: Verify OTP and Reset
+    if (otpResetForm) {
+      otpResetForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = recoveryEmailInput.value;
+        const otp = document.getElementById('recovery-otp').value;
+        const newPassword = document.getElementById('recovery-new-password').value;
+        const confirmNewPassword = document.getElementById('recovery-confirm-password').value;
+
+        if (newPassword.length < 4) {
+          showToast("New password must be at least 4 characters long.", true);
+          return;
+        }
+
+        if (newPassword !== confirmNewPassword) {
+          showToast("New passwords do not match.", true);
+          return;
+        }
+
+        try {
+          const res = await fetch('/api/admin/verify-otp-reset', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, otp, newPassword })
+          });
+
+          const data = await res.json();
+
+          if (res.ok && data.success) {
+            showToast("Access key reset successfully! Please log in.");
+            recoveryModal.classList.remove('active');
+            
+            // Auto fill the login password input field
+            passwordInput.value = newPassword;
+            passwordInput.focus();
+          } else {
+            showToast(data.error || "Failed to reset access key.", true);
+          }
+        } catch (err) {
+          console.error("Error resetting key:", err);
+          showToast("Server connection error.", true);
+        }
+      });
+    }
+  </script>
+</body>
+</html>

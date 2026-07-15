@@ -86,7 +86,7 @@ if (IS_SUPABASE_CONFIGURED) {
 }
 
 // Session security configurations
-const SESSION_SECRET = process.env.SESSION_SECRET || 'bhim-kitchen-super-secret-key-12345';
+const SESSION_SECRET = process.env.SESSION_SECRET || 'lords-kitchen-super-secret-key-12345';
 const SETTINGS_FILE = path.join(__dirname, 'settings.json');
 
 // Initialize settings structure helper
@@ -101,7 +101,7 @@ function loadSettings() {
         updated = true;
       }
       if (!config.adminEmail) {
-        config.adminEmail = 'bhimeswarbhimeswar@gmail.com';
+        config.adminEmail = 'lordskitchen@gmail.com';
         updated = true;
       }
       if (updated) {
@@ -111,14 +111,14 @@ function loadSettings() {
     } else {
       const config = {
         adminPassword: process.env.ADMIN_PASSWORD || 'admin123',
-        adminEmail: 'bhimeswarbhimeswar@gmail.com'
+        adminEmail: 'lordskitchen@gmail.com'
       };
       fs.writeFileSync(SETTINGS_FILE, JSON.stringify(config, null, 2));
       return config;
     }
   } catch (err) {
     console.error('Error loading settings:', err);
-    return { adminPassword: 'admin123', adminEmail: 'bhimeswarbhimeswar@gmail.com' };
+    return { adminPassword: 'admin123', adminEmail: 'lordskitchen@gmail.com' };
   }
 }
 
@@ -342,9 +342,9 @@ const activeOtps = new Map();
 async function sendOtpEmail(email, otp) {
   const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
   const smtpPort = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT, 10) : 587;
-  const smtpUser = process.env.SMTP_USER || 'bhimeswarbhimeswar@gmail.com';
+  const smtpUser = process.env.SMTP_USER || 'lordskitchen@gmail.com';
   const smtpPass = process.env.SMTP_PASS || 'mfvkgopaihbmgjpq';
-  const smtpFrom = process.env.SMTP_FROM || `"Bhim Kitchen Support" <bhimeswarbhimeswar@gmail.com>`;
+  const smtpFrom = process.env.SMTP_FROM || `"Lords Kitchen Support" <lordskitchen@gmail.com>`;
 
   const consoleLogMessage = `\n======================================\n[OTP RECOVERY] Reset OTP code for ${email} is: ${otp}\n======================================\n`;
 
@@ -368,11 +368,11 @@ async function sendOtpEmail(email, otp) {
     await transporter.sendMail({
       from: smtpFrom,
       to: email,
-      subject: 'Bhim Kitchen Admin Password Reset OTP',
+      subject: 'Lords Kitchen Admin Password Reset OTP',
       text: `Your password reset One-Time Password (OTP) is: ${otp}\n\nThis code will expire in 10 minutes.`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
-          <h2 style="color: #1a202c; border-bottom: 2px solid #9FE870; padding-bottom: 10px;">Bhim Kitchen Admin Portal</h2>
+          <h2 style="color: #1a202c; border-bottom: 2px solid #9FE870; padding-bottom: 10px;">Lords Kitchen Admin Portal</h2>
           <p>Hello Chef,</p>
           <p>We received a request to reset your admin portal access key. Use the following One-Time Password (OTP) to complete the reset:</p>
           <div style="background-color: #f7fafc; padding: 15px; text-align: center; border-radius: 6px; margin: 20px 0;">
@@ -397,9 +397,9 @@ async function sendOtpEmail(email, otp) {
 async function sendBookingConfirmationEmail(booking, hostUrl) {
   const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
   const smtpPort = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT, 10) : 587;
-  const smtpUser = process.env.SMTP_USER || 'bhimeswarbhimeswar@gmail.com';
+  const smtpUser = process.env.SMTP_USER || 'lordskitchen@gmail.com';
   const smtpPass = process.env.SMTP_PASS || 'mfvkgopaihbmgjpq';
-  const smtpFrom = process.env.SMTP_FROM || `"Bhim Kitchen Support" <${getAdminEmail()}>`;
+  const smtpFrom = process.env.SMTP_FROM || `"Lords Kitchen Support" <${getAdminEmail()}>`;
 
   const baseUrl = hostUrl || `http://localhost:${PORT}`;
   const cancelLink = `${baseUrl}/cancel.html?code=${booking.code}`;
@@ -449,18 +449,18 @@ Cancel Link: ${cancelLink}
     await transporter.sendMail({
       from: smtpFrom,
       to: booking.email,
-      subject: `Bhim Kitchen - Table Reservation Confirmed [${booking.code}]`,
-      text: `Hello ${booking.name},\n\nYour table reservation at Bhim Kitchen is confirmed!\n\nBooking Code: ${booking.code}\nDate: ${formattedDate}\nTime: ${booking.time}\nGuests: ${booking.guests} guests\nTable: ${tableNum} (${booking.section})\n\nIf you need to cancel this reservation, please click the link below:\n${cancelLink}\n\nThank you,\nBhim Kitchen Support`,
+      subject: `Lords Kitchen - Table Reservation Confirmed [${booking.code}]`,
+      text: `Hello ${booking.name},\n\nYour table reservation at Lords Kitchen is confirmed!\n\nBooking Code: ${booking.code}\nDate: ${formattedDate}\nTime: ${booking.time}\nGuests: ${booking.guests} guests\nTable: ${tableNum} (${booking.section})\n\nIf you need to cancel this reservation, please click the link below:\n${cancelLink}\n\nThank you,\nLords Kitchen Support`,
       html: `
         <div style="background-color: #090E0A; color: #E8F4EC; font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid #1E2D20; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
           <div style="text-align: center; border-bottom: 2px solid #9FE870; padding-bottom: 20px; margin-bottom: 25px;">
-            <span style="font-size: 32px; font-weight: bold; letter-spacing: 2px; color: #FFFFFF;">BHIM<span style="color: #9FE870;">KITCHEN</span></span>
+            <span style="font-size: 32px; font-weight: bold; letter-spacing: 2px; color: #FFFFFF;">LORDS<span style="color: #9FE870;">KITCHEN</span></span>
           </div>
           
           <h2 style="color: #FFFFFF; font-size: 22px; margin-top: 0; text-align: center;">Table Reservation Confirmed</h2>
           
           <p style="font-size: 16px; line-height: 1.6; color: #C2D6C7; text-align: center;">
-            Hello <strong>${booking.name}</strong>, Chef Bhim is excited to host you. Here are your booking details:
+            Hello <strong>${booking.name}</strong>, Chef Lords is excited to host you. Here are your booking details:
           </p>
           
           <div style="background-color: #121A13; border: 1px solid rgba(159, 232, 112, 0.15); border-radius: 8px; padding: 20px; margin: 25px 0;">
@@ -497,7 +497,7 @@ Cancel Link: ${cancelLink}
           </div>
           
           <div style="border-top: 1px solid #1E2D20; padding-top: 20px; margin-top: 30px; text-align: center; font-size: 12px; color: #698375;">
-            This email was sent from Bhim Kitchen. For inquiries or special requests, please email us at ${getAdminEmail()}.
+            This email was sent from Lords Kitchen. For inquiries or special requests, please email us at ${getAdminEmail()}.
           </div>
         </div>
       `

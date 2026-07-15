@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bhim Kitchen | Reservation Management Hub</title>
-  <meta name="description" content="Chef Bhim's kitchen operations dashboard for viewing active table bookings, custom instructions, and dish pre-orders.">
+  <title>Lords Kitchen | Reservation Management Hub</title>
+  <meta name="description" content="Chef Lords's kitchen operations dashboard for viewing active table bookings, custom instructions, and dish pre-orders.">
   <link rel="stylesheet" href="styles.css">
   <style>
     /* Dashboard Specific Overrides and Additions */
@@ -391,8 +391,8 @@
   <header class="navbar">
     <div class="container navbar-container">
       <a href="/" class="logo">
-        <div class="logo-icon">B</div>
-        BHIM<span>KITCHEN</span>
+        <div class="logo-icon">L</div>
+        LORDS<span>KITCHEN</span>
       </a>
       <div class="nav-cta" style="display: flex; gap: 12px; align-items: center;">
         <a href="/index.html#reservation" class="btn btn-secondary btn-header-back">← Back to Main Website</a>
@@ -495,7 +495,7 @@
           </div>
           <div class="form-group" style="border-top: 1px solid rgba(159, 232, 112, 0.08); padding-top: 15px;">
             <label for="settings-email">Admin Email Address</label>
-            <input type="email" id="settings-email" required placeholder="bhimeswarbhimeswar@gmail.com">
+            <input type="email" id="settings-email" required placeholder="lordskitchen@gmail.com">
           </div>
           <div class="form-group">
             <label for="new-password">Change Access Key (Optional)</label>
@@ -719,12 +719,12 @@
         // Notes html
         const notesHtml = booking.chefInstructions ? `
           <div class="chef-notes-box">
-            <div class="chef-notes-title">Direct Notes for Chef Bhim</div>
+            <div class="chef-notes-title">Direct Notes for Chef Lords</div>
             <p style="font-size:13.5px; margin:0; font-style:italic;">"${booking.chefInstructions}"</p>
           </div>
         ` : `
           <div class="chef-notes-box" style="border-left-color: rgba(159,232,112,0.15);">
-            <div class="chef-notes-title" style="color:var(--color-text-gray);">Notes for Chef Bhim</div>
+            <div class="chef-notes-title" style="color:var(--color-text-gray);">Notes for Chef Lords</div>
             <p style="font-size:13.5px; margin:0; color:var(--color-text-gray);">None provided.</p>
           </div>
         `;

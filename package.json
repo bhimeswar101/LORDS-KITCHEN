@@ -1,7 +1,7 @@
 {
-  "name": "bhim-kitchen",
+  "name": "lords-kitchen",
   "version": "1.0.0",
-  "description": "Bhim Kitchen Master Chef Dining Experience Showcase",
+  "description": "Lords Kitchen Master Chef Dining Experience Showcase",
   "main": "server.js",
   "scripts": {
     "dev": "node server.js",

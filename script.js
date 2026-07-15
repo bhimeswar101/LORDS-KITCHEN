@@ -1,157 +1,262 @@
 // MENU DATA (With South Indian Specialties & Custom Add-ons in INR)
 const menuData = [
   {
-    id: "spec-1",
-    title: "Curry Leaf Avocado Tartar",
-    price: 450,
-    desc: "Creamy mashed Hass avocados infused with tempered curry leaves, black mustard seeds, and dry red chilis, served with crisp appam shards.",
-    category: "starters",
-    tags: ["South Indian", "Vegan", "Signature"],
-    img: "dish_1.png",
-    addons: [
-      { name: "Extra Appam Shards", price: 60 },
-      { name: "Truffle Oil Drizzle", price: 80 }
-    ]
-  },
-  {
-    id: "spec-2",
-    title: "Herb-Crusted Roast Entree",
-    price: 850,
-    desc: "Crusted with roasted chettinad spices, served alongside bright green pea-mint purée, asparagus spears, and finished with a dark tamarind reduction glaze.",
-    category: "mains",
-    tags: ["Chef's Special", "Gluten-Free"],
-    img: "dish_2.png",
-    addons: [
-      { name: "Grated Gunpowder Paneer", price: 110 },
-      { name: "Extra Reduction Sauce", price: 40 }
-    ]
-  },
-  {
-    id: "spec-3",
-    title: "Matcha Payasam Lava Cake",
-    price: 350,
-    desc: "A decadent warm fusion dessert with a molten core of coconut-cardamom payasam and rich green matcha, served with pure vanilla bean ice cream.",
-    category: "desserts",
-    tags: ["South Indian", "Dessert", "Fusion"],
-    img: "dish_3.png",
-    addons: [
-      { name: "Extra Scoop Vanilla Ice Cream", price: 60 },
-      { name: "Salted Caramel Drizzle", price: 40 }
-    ]
-  },
-  {
-    id: "south-meal-1",
-    title: "Grand Master Chef South Indian Meal (Thali)",
-    price: 950,
-    desc: "An opulent curated platter containing traditional Sona Masuri rice, Chef Bhim's special sambar, rasam, kootu, poriyal, house-crafted curd, papadum, pickle, and warm Mysore Pak, served on a fresh banana leaf liner.",
-    category: "south-indian",
-    tags: ["South Indian", "Feast", "Recommended"],
-    img: "dish_2.png",
-    addons: [
-      { name: "Extra Ghee Rice", price: 150 },
-      { name: "Malabar Parotta (2 pcs)", price: 80 }
-    ]
-  },
-  {
     id: "south-1",
-    title: "Signature Ghee Podi Dosa Roll",
+    title: "Chettinad Pepper Chicken",
     price: 320,
-    desc: "Super thin crispy rice crepe layered with spiced red chili chutney, loaded with organic cow ghee and aromatic gunpowder podi, rolled and served with tomato-coconut chutney.",
-    category: "south-indian",
-    tags: ["South Indian", "Spicy", "Master Chef Favorite"],
-    img: "dish_1.png",
+    desc: "Tender chicken marinated in freshly ground Chettinad spices, roasted black pepper, curry leaves, and aromatic herbs, served with flaky Malabar parotta.",
+    category: "mains",
+    tags: ["South Indian", "Chef's Special", "Spicy"],
+    img: "chettinad_chicken.png",
     addons: [
-      { name: "Extra Pure Ghee", price: 60 },
-      { name: "Cheese Filling", price: 80 },
-      { name: "Gunpowder Dip", price: 40 }
+      { name: "Extra Malabar Parotta (1 pc)", price: 40 },
+      { name: "Extra Curry Leaf Gravy", price: 60 }
     ]
   },
   {
     id: "south-2",
-    title: "Paneer Chettinad Skewers",
-    price: 380,
-    desc: "Marinated cubes of fresh cottage cheese cooked in a tandoor with fiery stone-ground Chettinad pepper spices, green bell peppers, and fresh curry leaf dip.",
+    title: "Ghee Podi Idli Bites",
+    price: 180,
+    desc: "Soft mini idlis tossed in homemade gunpowder, pure A2 ghee, roasted curry leaves, and crispy cashews, served with coconut and tomato chutneys.",
     category: "starters",
-    tags: ["South Indian", "Spicy", "Vegetarian"],
-    img: "dish_2.png",
+    tags: ["South Indian", "Vegetarian", "Popular"],
+    img: "podi_idli.png",
     addons: [
-      { name: "Extra Curry Leaf Sauce", price: 30 },
-      { name: "Double Paneer Portion", price: 120 }
+      { name: "Extra Gunpowder Podi", price: 30 },
+      { name: "Extra A2 Ghee Drizzle", price: 40 }
     ]
   },
   {
     id: "south-3",
-    title: "Truffle Gunpowder Idli Skewers",
-    price: 290,
-    desc: "Bite-sized steamed rice cakes tossed in high-grade Italian white truffle oil, sprinkled with spicy lentil gunpowder and micro greens.",
-    category: "starters",
-    tags: ["South Indian", "Vegan"],
-    img: "dish_1.png",
+    title: "Andhra Gongura Mutton",
+    price: 420,
+    desc: "Slow-cooked tender mutton simmered with tangy gongura leaves, roasted spices, garlic, and green chilies for a bold Andhra-style flavor.",
+    category: "mains",
+    tags: ["South Indian", "Signature", "Spicy"],
+    img: "gongura_mutton.png",
     addons: [
-      { name: "Organic Honey Glaze", price: 40 },
-      { name: "Coconut Sambhar Bowl", price: 60 }
+      { name: "Steamed Rice Portion", price: 80 },
+      { name: "Gongura Pickle Cup", price: 40 }
     ]
   },
   {
     id: "south-4",
-    title: "Kottu Parotta Croquettes",
-    price: 310,
-    desc: "Shredded layered flatbread cooked with Master Chef Bhim's special vegetable salna, crumbed and fried to golden perfection with a mozzarella heart.",
-    category: "starters",
-    tags: ["Fusion", "Vegetarian"],
-    img: "dish_2.png",
+    title: "Kerala Coconut Fish Curry",
+    price: 360,
+    desc: "Fresh fish cooked in creamy coconut milk with kokum, curry leaves, mustard seeds, and traditional Kerala spices, served with steamed rice.",
+    category: "mains",
+    tags: ["South Indian", "Seafood", "Chef's Choice"],
+    img: "coconut_fish_curry.png",
     addons: [
-      { name: "Cheesy Salna Dip", price: 50 }
+      { name: "Extra Steamed Rice", price: 60 },
+      { name: "Kerala Appam (2 pcs)", price: 80 }
     ]
   },
   {
     id: "south-5",
-    title: "Jackfruit Dum Biryani",
-    price: 480,
-    desc: "Fragrant basmati rice layered with raw baby jackfruit chunks marinated in green mint paste, ginger-garlic, and fresh ground spices, slow-cooked in a sealed clay pot.",
+    title: "Mysore Masala Dosa Supreme",
+    price: 220,
+    desc: "Golden crispy dosa layered with spicy Mysore chutney, stuffed with buttery potato masala, and served with three house-made chutneys and sambar.",
     category: "mains",
-    tags: ["Gluten-Free", "Vegetarian"],
-    img: "dish_2.png",
+    tags: ["South Indian", "Vegetarian", "Best Seller"],
+    img: "masala_dosa.png",
     addons: [
-      { name: "Extra Spiced Salna", price: 40 },
-      { name: "Raita Dip", price: 30 }
+      { name: "Extra Potato Masala Filling", price: 50 },
+      { name: "Cheese Topping", price: 60 }
     ]
   },
   {
     id: "south-6",
-    title: "Cardamom Mysore Pak Truffles",
-    price: 280,
-    desc: "Traditional chickpea flour fudge loaded with premium clarified butter, scented with green cardamom, and rolled into bite-sized cocoa-dusted truffles.",
-    category: "desserts",
-    tags: ["South Indian", "Sweet"],
-    img: "dish_3.png",
+    title: "Hyderabadi Dum Chicken Biryani",
+    price: 390,
+    desc: "Fragrant basmati rice layered with succulent chicken, saffron, mint, caramelized onions, and slow-cooked in the traditional dum style.",
+    category: "mains",
+    tags: ["South Indian", "Biryani", "Recommended"],
+    img: "dum_biryani.png",
     addons: [
-      { name: "Crushed Pistachio Coating", price: 40 }
+      { name: "Extra Salna", price: 30 },
+      { name: "Mirchi Ka Salan Bowl", price: 50 }
     ]
   },
   {
     id: "south-7",
-    title: "Curry Leaf Botanical Mocktail",
-    price: 190,
-    desc: "A refreshing cooler made with muddled fresh curry leaves, lime, organic sugarcane syrup, mint, soda, and a dash of pink salt.",
-    category: "beverages",
-    tags: ["South Indian", "Organic", "Cold"],
-    img: "dish_3.png",
+    title: "Kanchipuram Temple Pongal",
+    price: 170,
+    desc: "Traditional temple-style pongal infused with black pepper, cumin, ghee, roasted cashews, and ginger, served with coconut chutney and sambar.",
+    category: "mains",
+    tags: ["South Indian", "Comfort Food", "Vegetarian"],
+    img: "temple_pongal.png",
     addons: [
-      { name: "Chia Seed Infusion", price: 30 }
+      { name: "Extra Roasted Cashews", price: 50 },
+      { name: "Ghee Medu Vada (1 pc)", price: 40 }
     ]
   },
   {
     id: "south-8",
-    title: "Chef Bhim's Meter Filter Coffee",
-    price: 120,
-    desc: "Traditional chicory-blend coffee frothed with organic cow's milk from a high elevation to create the perfect velvet layer.",
-    category: "beverages",
-    tags: ["South Indian", "Hot", "Classic"],
-    img: "dish_3.png",
+    title: "Malabar Prawn Curry",
+    price: 430,
+    desc: "Juicy prawns simmered in rich coconut gravy with roasted fennel, curry leaves, tamarind, and Kerala spices.",
+    category: "mains",
+    tags: ["South Indian", "Seafood", "Premium"],
+    img: "prawn_curry.png",
     addons: [
-      { name: "Double Shot Chicory", price: 40 },
-      { name: "Almond Milk Substitute", price: 30 }
+      { name: "Malabar Parotta (2 pcs)", price: 80 },
+      { name: "Steamed Basmati Rice", price: 80 }
+    ]
+  },
+  {
+    id: "south-9",
+    title: "Paneer Chettinad Curry",
+    price: 280,
+    desc: "Soft paneer cubes cooked in a rich Chettinad masala with roasted spices, tomatoes, onions, and fresh curry leaves.",
+    category: "mains",
+    tags: ["South Indian", "Vegetarian", "Chef's Special"],
+    img: "paneer_chettinad.png",
+    addons: [
+      { name: "Tandoori Roti (2 pcs)", price: 60 },
+      { name: "Butter Naan (1 pc)", price: 50 }
+    ]
+  },
+  {
+    id: "south-10",
+    title: "Elaneer Payasam Delight",
+    price: 160,
+    desc: "Refreshing tender coconut payasam prepared with fresh coconut milk, jaggery, cardamom, and roasted nuts.",
+    category: "desserts",
+    tags: ["South Indian", "Dessert", "Signature"],
+    img: "elaneer_payasam.png",
+    addons: [
+      { name: "Extra Roasted Cashew/Raisin Mix", price: 30 }
+    ]
+  },
+  {
+    id: "korean-1",
+    title: "Korean Fried Chicken",
+    price: 360,
+    desc: "Double-fried crispy chicken glazed in a sweet, spicy gochujang sauce, topped with toasted sesame seeds and fresh spring onions.",
+    category: "starters",
+    tags: ["Korean", "Best Seller", "Spicy"],
+    img: "korean_fried_chicken.png",
+    addons: [
+      { name: "Extra Sweet Gochujang Glaze", price: 40 },
+      { name: "Pickled Radish (Moo)", price: 30 }
+    ]
+  },
+  {
+    id: "korean-2",
+    title: "Bibimbap Bowl",
+    price: 340,
+    desc: "Steamed rice topped with sautéed vegetables, marinated mushrooms, fried egg, kimchi, and spicy gochujang sauce.",
+    category: "mains",
+    tags: ["Korean", "Healthy", "Popular"],
+    img: "bibimbap_bowl.png",
+    addons: [
+      { name: "Extra Fried Egg", price: 30 },
+      { name: "Extra Kimchi Portion", price: 40 }
+    ]
+  },
+  {
+    id: "korean-3",
+    title: "Kimchi Fried Rice",
+    price: 280,
+    desc: "Wok-tossed rice with aged kimchi, vegetables, sesame oil, and a perfectly fried egg finished with roasted sesame seeds.",
+    category: "mains",
+    tags: ["Korean", "Comfort Food", "Vegetarian"],
+    img: "kimchi_rice.png",
+    addons: [
+      { name: "Extra Fried Egg", price: 30 },
+      { name: "Double Kimchi Flavor", price: 40 }
+    ]
+  },
+  {
+    id: "korean-4",
+    title: "Bulgogi Beef Rice Bowl",
+    price: 450,
+    desc: "Thinly sliced beef marinated in soy, garlic, pear, and sesame, grilled to perfection and served over steamed jasmine rice.",
+    category: "mains",
+    tags: ["Korean", "Premium", "Chef's Special"],
+    img: "bulgogi_beef.png",
+    addons: [
+      { name: "Extra Jasmine Rice", price: 60 },
+      { name: "Marinated Beef Portion Double", price: 180 }
+    ]
+  },
+  {
+    id: "korean-5",
+    title: "Tteokbokki Supreme",
+    price: 300,
+    desc: "Soft Korean rice cakes simmered in a rich spicy gochujang sauce with fish cakes, spring onions, and melted mozzarella.",
+    category: "starters",
+    tags: ["Korean", "Street Food", "Spicy"],
+    img: "tteokbokki.png",
+    addons: [
+      { name: "Extra Melted Mozzarella", price: 60 },
+      { name: "Hard Boiled Egg", price: 20 }
+    ]
+  },
+  {
+    id: "korean-6",
+    title: "Korean Garlic Soy Wings",
+    price: 340,
+    desc: "Golden crispy chicken wings coated in a savory garlic-soy glaze and garnished with roasted sesame seeds.",
+    category: "starters",
+    tags: ["Korean", "Signature", "Popular"],
+    img: "soy_wings.png",
+    addons: [
+      { name: "Garlic Soy Dipping Sauce", price: 30 },
+      { name: "Pickled Cucumber Salad", price: 40 }
+    ]
+  },
+  {
+    id: "korean-7",
+    title: "Japchae Glass Noodles",
+    price: 290,
+    desc: "Sweet potato glass noodles stir-fried with colorful vegetables, mushrooms, sesame oil, and soy sauce.",
+    category: "mains",
+    tags: ["Korean", "Vegetarian", "Healthy"],
+    img: "glass_noodles.png",
+    addons: [
+      { name: "Extra Stir-fried Mushrooms", price: 50 },
+      { name: "Sesame Oil Drizzle", price: 20 }
+    ]
+  },
+  {
+    id: "korean-8",
+    title: "Kimchi Udon Stir Fry",
+    price: 320,
+    desc: "Thick udon noodles tossed with kimchi, vegetables, garlic, sesame oil, and spicy Korean seasonings.",
+    category: "mains",
+    tags: ["Korean", "Fusion", "Chef's Choice"],
+    img: "glass_noodles.png",
+    addons: [
+      { name: "Extra Udon Noodles Portion", price: 80 },
+      { name: "Spicy Gochugaru Flakes", price: 20 }
+    ]
+  },
+  {
+    id: "korean-9",
+    title: "Bingsu Mango Snow",
+    price: 240,
+    desc: "Traditional Korean shaved ice topped with fresh Alphonso mango, condensed milk, vanilla ice cream, and crunchy almond flakes.",
+    category: "desserts",
+    tags: ["Korean", "Dessert", "Refreshing"],
+    img: "elaneer_payasam.png",
+    addons: [
+      { name: "Extra Alphonso Mango Topping", price: 60 },
+      { name: "Extra Condensed Milk Scoop", price: 30 }
+    ]
+  },
+  {
+    id: "korean-10",
+    title: "Honey Butter Hotteok",
+    price: 220,
+    desc: "Warm Korean pancakes filled with brown sugar, cinnamon, roasted walnuts, and finished with whipped honey butter.",
+    category: "desserts",
+    tags: ["Korean", "Dessert", "Signature"],
+    img: "elaneer_payasam.png",
+    addons: [
+      { name: "Extra Whipped Honey Butter", price: 40 },
+      { name: "Extra Roasted Walnuts Cup", price: 50 }
     ]
   }
 ];
@@ -279,6 +384,8 @@ function renderMenu() {
       matchesCategory = true;
     } else if (activeFilter === "south-indian") {
       matchesCategory = item.category === "south-indian" || item.tags.includes("South Indian");
+    } else if (activeFilter === "korean") {
+      matchesCategory = item.category === "korean" || item.tags.includes("Korean");
     } else {
       matchesCategory = item.category === activeFilter;
     }
